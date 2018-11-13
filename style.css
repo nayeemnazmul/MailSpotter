@@ -97,16 +97,19 @@ h3
 }
 
 .wrapper > div{
-	/* background: #eee; */
-	/* border:#333 1px solid; */
+	background: #eee;
+	/* border:#eee 1px solid; */
 	padding: 1em;
-	align: center;
+	border-radius: 12px;
+	/* align: center; */
 }
-.form-control-borderless {
+.form-control-borderless
+{
     border: none;
 }
 
-.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus
+{
     border: none;
     outline: none;
     box-shadow: none;
@@ -116,4 +119,30 @@ h3
 {
 	padding: 100px;
 
+}
+
+.tb_pos
+{
+	padding: 100px;
+}
+
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+		border: 1px solid black;
+    width: 100%;
+}
+
+th, td {
+		border: 1px solid black;
+    text-align: center;
+    padding: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #ffcc00
+}
+tr:nth-child(odd) {
+    background-color: #ffffff
 }

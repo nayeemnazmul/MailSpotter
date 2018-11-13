@@ -5,44 +5,70 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Dashboard</title>
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<div class="wrapper">
-    <div><a href="#" class="btn btn-danger">Dashboard</a></div>
-    <div><a href="#" class="btn btn-danger">Search Section</a></div>
-    <div><a href="send_mail.html" class="btn btn-danger">Send Email</a></div>
-    <div><a href="#" class="btn btn-danger">Log Out</a></div>
+    <div><a href="#" class="btn btn-light">Dashboard</a></div>
+    <div><a href="#" class="btn btn-info">Search Section</a></div>
+    <div><a href="send_mail.html" class="btn btn-info">Send Email</a></div>
+    <div align="right"><a href="#" class="btn btn-danger">Log Out</a></div>
   </div>
 <div class="container">
 <br/>
-<div class="row justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8">
-        <form class="card card-sm">
-            <div class="card-body row no-gutters align-items-center">
-                <div class="col-auto">
-                    <i class="fas fa-search h4 text-body"></i>
-                </div>
-                <!--end of col-->
-                <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
-                </div>
-                <!--end of col-->
-                <div class="col-auto">
-                    <button class="btn btn-lg btn-success" type="submit">Search</button>
-                </div>
-                <!--end of col-->
-            </div>
-        </form>
-    </div>
-    <!--end of col-->
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-10 col-lg-8">
+			<form class="card card-sm">
+		  <div class="card-body row no-gutters align-items-center">
+		    <div class="col-auto">
+		        <i class="fas fa-search h4 text-body"></i>
+		    </div>
+		    <div class="col">
+		        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search for email">
+		    </div>
+		    <div class="col-auto">
+		        <button class="btn btn-lg btn-success" type="submit">Search</button>
+		    </div>
+		  </div>
+			</form>
+		</div>
+	</div>
 </div>
+<br>
+<div class="tb_pos">
+	<caption>Total Email Found n</caption>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>stephen.broadberry@nuffield.ox.ac.uk</td>
+    <td>Safe</td>
+  </tr>
+  <tr>
+    <td>mbinder@unm.edu</td>
+    <td>Maybe Safe</td>
+  </tr>
+  <tr>
+    <td>mdg5396@psu.edu</td>
+    <td>Safe</td>
+  </tr>
+  <tr>
+    <td>m_mousavi@modares.ac.ir</td>
+    <td>Maybe Safe</td>
+  </tr>
+  <tr>
+    <td>boskin@stanford.edu</td>
+    <td>Safe</td>
+  </tr>
+</table>
 </div>
 </body>
 </html>
