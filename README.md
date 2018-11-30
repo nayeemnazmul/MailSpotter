@@ -5,5 +5,5 @@ required packages:
   flask-wtf
   flask-sqlalchemy
   flask-bcrypt
-  PIL
+  PILO
   flask_login
