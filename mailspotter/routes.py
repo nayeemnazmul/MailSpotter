@@ -7,10 +7,12 @@ from mailspotter.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from mailspotter.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 
+
 @app.route("/")
 @app.route("/dashboard")
 def dashboard():
 	return render_template('dashboard.html', title='Dashboard')
+
 
 @app.route("/register", methods=['GET','POST'])
 def register():
@@ -52,7 +54,7 @@ def save_picture(form_picture):
 	_, f_ext = os.path.splitext(form_picture.filename)
 	picture_fn = random_hex + f_ext
 	picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
-	
+
 	output_size = (125, 125)
 	i = Image.open(form_picture)
 	i.thumbnail(output_size)
@@ -61,7 +63,7 @@ def save_picture(form_picture):
 	return picture_fn
 
 
-@app.route("/account", methods=['GET','POST'])
+@app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
 	form = UpdateAccountForm()
@@ -72,7 +74,7 @@ def account():
 		current_user.username = form.username.data
 		current_user.email = form.email.data
 		db.session.commit()
-		flash('Account info has been updated!','success')
+		flash('Account info has been updated!', 'success')
 		return redirect(url_for('account'))
 	elif request.method == 'GET':
 		form.username.data = current_user.username
