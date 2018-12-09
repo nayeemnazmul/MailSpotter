@@ -45,7 +45,7 @@
     </header>
     <main role="main" class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -55,20 +55,11 @@
               {% endfor %}
             {% endif %}
           {% endwith %}
-          {% block content %}{% endblock %}
+          {% block content %}{% endblock content%}
         </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Useful Links</h3>
-            <p class='text-muted'>
-              <ul class="list-group">
-                <a class="list-group-item list-group-item-light" href="https://www.academia.edu/">Academia</a>
-                <a class="list-group-item list-group-item-light" href="https://scholar.google.com/">Google Scholar</a>
-                <a class="list-group-item list-group-item-light" href="https://www.instructables.com">Instructables</a>
-                <a class="list-group-item list-group-item-light" href="https://developer.mozilla.org">Mozilla Developer Network</a>
-              </ul>
-            </p>
-          </div>
+        <div class="col-md-9">
+          {% block usefull_links %}
+          {% endblock usefull_links %}
         </div>
       </div>
     </main>
