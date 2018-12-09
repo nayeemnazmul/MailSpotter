@@ -2,8 +2,6 @@
 # Created by https://www.gitignore.io/api/flask,pycharm
 # Edit at https://www.gitignore.io/?templates=flask,pycharm
 
-# database
-mailspotter/site.db
 
 #static profile pics
 mailspotter/static/profile_pics/

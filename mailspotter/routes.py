@@ -1,11 +1,12 @@
 import os 
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request
 from mailspotter import app, db, bcrypt
-from mailspotter.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from mailspotter.forms import RegistrationForm, LoginForm, UpdateAccountForm, SearchEmailForm
 from mailspotter.models import User
 from flask_login import login_user, current_user, logout_user, login_required
+from email_scraper.EmailScraper import EmailScraper
 
 
 @app.route("/")
@@ -14,7 +15,7 @@ def dashboard():
 	return render_template('dashboard.html', title='Dashboard')
 
 
-@app.route("/register", methods=['GET','POST'])
+@app.route("/register", methods=['GET', 'POST'])
 def register():
 	
 	form = RegistrationForm()
@@ -28,7 +29,7 @@ def register():
 	return render_template('register.html', title='Register', form=form)
 
 
-@app.route("/login", methods=['GET','POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
 	if current_user.is_authenticated:
 		return redirect(url_for('dashboard'))
@@ -82,3 +83,16 @@ def save_picture(form_picture):
 	i.save(picture_path)
 
 	return picture_fn
+
+
+@app.route("/search-email", methods=['GET', 'POST'])
+@login_required
+def search_email():
+	form = SearchEmailForm()
+	if form.validate_on_submit():
+		email_scraper = EmailScraper(form.keywords.data)
+		emails = email_scraper.search()
+		return render_template('search-email.html', title='Search Email', emails=emails, form=form)
+
+	return render_template('search-email.html', title='Search Email', form=form)
+

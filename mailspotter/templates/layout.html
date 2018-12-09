@@ -29,13 +29,14 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav ml-auto">
               {% if current_user.is_authenticated: %}
-                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
-                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Send Mail</a>
-                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                  <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                  <a class="nav-item nav-link" href="{{ url_for('search_email') }}">Search Email</a>
+                  <a class="nav-item nav-link" href="#">Send Mail</a>
+                  <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+                  <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
               {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                  <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                  <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
               {% endif %}
             </div>
           </div>

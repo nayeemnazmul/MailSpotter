@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.csrf_token() }}
+            <div class="form-group">
+				{{ form.keywords.label(class="form-control-label") }}
+                {% if form.keywords.errors %}
+						{{ form.keywords(class="form-control form-control-lg is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in form.keywords.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.keywords(class="form-control form-control-lg") }}
+					{% endif %}
+			</div>
+            <div class="form-group">
+				{{ form.submit(class="btn btn-outline-success") }}
+			</div>
+        </form>
+    </div>
+
+    {% if emails %}
+        <div class="content-section">
+            {% if emails|length > 0 %}
+                <div class="alert alert-success" role="alert">
+                    {{emails|length}} emails have been found!
+                </div>
+                <table class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Emails</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for email in emails %}
+                        <tr>
+                          <th scope="row">{{ loop.index }}</th>
+                          <td>{{ email }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-danger" role="alert">
+                    {{emails|length}} email has been found!
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock content %}

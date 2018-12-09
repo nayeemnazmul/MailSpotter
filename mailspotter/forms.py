@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length,Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from mailspotter.models import User
 
 
@@ -48,3 +48,13 @@ class UpdateAccountForm(FlaskForm):
 			user = User.query.filter_by(email=email.data).first()
 			if user:
 				raise ValidationError('Email already exist!')
+
+
+class SearchEmailForm(FlaskForm):
+	keywords = StringField('Enter keywords to search: ', validators=[DataRequired(), Length(min=2, max=50)])
+	submit = SubmitField('Search Email')
+
+
+
+
+
