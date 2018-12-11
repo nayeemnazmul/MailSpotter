@@ -1,6 +1,8 @@
 import requests
 import re  # regex module
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 
 class EmailScraper:
@@ -15,9 +17,11 @@ class EmailScraper:
         url = "https://www.google.com/search?q={0}".format(temp_query)
 
         response = None
+        session = requests_retry_session()
+
         try:
             # sending an http get request with specific url and get a response
-            response = requests.get(url)
+            response = session.get(url)
 
         except requests.exceptions.ConnectionError:
             print("Connection Error")
@@ -35,30 +39,32 @@ class EmailScraper:
         all_email = []
         for tag in soup.find_all('cite'):
             url = tag.get_text()
-            emails = self.get_emails(url)
-
+            emails = self.get_emails(url, session)
+            if emails is None:
+                continue
             all_email.extend(emails)
         return set(self.strip(all_email))
 
-    def get_emails(self, url):
-
+    def get_emails(self, url, session):
         response = None
 
         try:
             # sending an http get request with specific url and get a response
-            response = requests.get(url)
+            response = session.get(url)
 
         except requests.exceptions.ConnectionError:
             print("Connection Error " + url)
         except requests.exceptions.HTTPError:
             print("Bad Request. " + url)
         except requests.exceptions.InvalidURL:
-            response = requests.get("http://" + url)
+            response = session.get("http://" + url)
         except requests.exceptions.InvalidSchema:
-            response = requests.get("http://" + url)
+            response = session.get("http://" + url)
         except requests.exceptions.MissingSchema:
-            response = requests.get("http://" + url)
+            response = session.get("http://" + url)
 
+        if response is None:
+            return
         # email pattern to match with - name@domain.com
         email_pattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+" # 1st pattern
         # making the regex workable - compile it with ignore case
@@ -91,6 +97,28 @@ class EmailScraper:
         third = [item.replace(" @ ", "@") for item in second]
 
         return third
+
+
+def requests_retry_session(
+    retries=3,
+    backoff_factor=0.3,
+    status_forcelist=(500, 502, 504),
+    session=None,
+):
+    session = session or requests.Session()
+    session.max_redirects = 60
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist,
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    return session
 
 
 if __name__ == "__main__":
