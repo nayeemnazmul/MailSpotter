@@ -16,23 +16,34 @@ class EmailScraper:
 
         url = "https://www.google.com/search?q={0}".format(temp_query)
 
-        response = None
         session = requests_retry_session()
 
         try:
             # sending an http get request with specific url and get a response
             response = session.get(url)
-
+            if response is None:
+                return
         except requests.exceptions.ConnectionError:
-            print("Connection Error")
+            print("Connection Error " + url)
+            return "Connection Error"
+        except requests.exceptions.Timeout:
+            print("Request timed out" + url)
+            return "Request timed out"
+        except requests.exceptions.TooManyRedirects:
+            print("Too many redirects " + url)
+            return
         except requests.exceptions.HTTPError:
-            print("Bad Request.")
+            print("Bad Request." + url)
+            return
         except requests.exceptions.InvalidURL:
-            print("Invalid URL.")
+            print("Invalid URL. " + url)
+            return
         except requests.exceptions.InvalidSchema:
-            print("Invalid URL.")
+            print("Invalid Schema." + url)
+            return
         except requests.exceptions.MissingSchema:
-            print("Invalid URL.")
+            print("Missing Schema URL. " + url)
+            return
 
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -46,7 +57,6 @@ class EmailScraper:
         return set(self.strip(all_email))
 
     def get_emails(self, url, session):
-        response = None
 
         try:
             # sending an http get request with specific url and get a response
@@ -54,13 +64,24 @@ class EmailScraper:
 
         except requests.exceptions.ConnectionError:
             print("Connection Error " + url)
+            return
         except requests.exceptions.HTTPError:
             print("Bad Request. " + url)
+            return
+        except requests.exceptions.Timeout:
+            print("Request timed out" + url)
+            return
+        except requests.exceptions.TooManyRedirects:
+            print("Too many redirects " + url)
+            return
         except requests.exceptions.InvalidURL:
-            response = session.get("http://" + url)
+            print("Invalid URL. " + url)
+            return
         except requests.exceptions.InvalidSchema:
+            print("Invalid Schema." + url)
             response = session.get("http://" + url)
         except requests.exceptions.MissingSchema:
+            print("Missing Schema URL. " + url)
             response = session.get("http://" + url)
 
         if response is None:
@@ -107,6 +128,7 @@ def requests_retry_session(
 ):
     session = session or requests.Session()
     session.max_redirects = 60
+    session.headers['User-Agent'] = 'Googlebot/2.1 (+http://www.google.com/bot.html)'
     retry = Retry(
         total=retries,
         read=retries,

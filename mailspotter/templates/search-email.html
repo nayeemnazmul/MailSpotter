@@ -7,15 +7,15 @@
             <div class="form-group">
 				{{ form.keywords.label(class="form-control-label") }}
                 {% if form.keywords.errors %}
-						{{ form.keywords(class="form-control form-control-lg is-invalid") }}
-						<div class="invalid-feedback">
-							{% for error in form.keywords.errors %}
-								<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-					{% else %}
-						{{ form.keywords(class="form-control form-control-lg") }}
-					{% endif %}
+                    {{ form.keywords(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.keywords.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.keywords(class="form-control form-control-lg") }}
+                {% endif %}
 			</div>
             <div class="form-group">
 				{{ form.submit(class="btn btn-outline-success") }}
@@ -23,33 +23,43 @@
         </form>
     </div>
 
-    {% if emails %}
-        <div class="content-section">
-            {% if emails|length > 0 %}
-                <div class="alert alert-success" role="alert">
-                    {{emails|length}} emails have been found!
-                </div>
-                <table class="table table-striped">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Emails</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for email in emails %}
+    {% if message is defined %}
+        {% if message is iterable and message is not string %}
+            {% if message|length > 0 %}
+                <div class="content-section">
+                    <div class="alert alert-success" role="alert">
+                        {{message|length}} emails have been found!
+                    </div>
+                    <table class="table table-striped">
+                      <thead class="thead-dark">
                         <tr>
-                          <th scope="row">{{ loop.index }}</th>
-                          <td>{{ email }}</td>
+                          <th scope="col">#</th>
+                          <th scope="col">Emails</th>
                         </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
+                      </thead>
+                      <tbody>
+                        {% for email in message %}
+                            <tr>
+                              <th scope="row">{{ loop.index }}</th>
+                              <td>{{ email }}</td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
             {% else %}
                 <div class="alert alert-danger" role="alert">
-                    {{emails|length}} email has been found!
+                    {{message|length}} email has been found! Try with different keywords.
                 </div>
             {% endif %}
-        </div>
+        {% elif message is string %} {# message contain any string message other than email list #}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% elif message is none %}
+            <div class="alert alert-danger" role="alert">
+                0 email has been found! Try with different keywords.
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock content %}
