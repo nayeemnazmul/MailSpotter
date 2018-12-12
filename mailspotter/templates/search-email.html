@@ -28,10 +28,10 @@
             {% if message[0]|length > 0 %}
                 <div class="content-section">
                     <div class="alert alert-success" role="alert">
-                        {{message|length}} emails have been found!
+                        {{message[0]|length}} emails have been found!
                     </div>
                     <div class="alert alert-success" role="alert">
-                        {{ message[1] }} seconds taken!
+                        {{ "%.2f"|format(message[1]) }} seconds taken!
                     </div>
                     <table class="table table-striped">
                       <thead class="thead-dark">
@@ -41,7 +41,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for email in message %}
+                        {% for email in message[0] %}
                             <tr>
                               <th scope="row">{{ loop.index }}</th>
                               <td>{{ email }}</td>
