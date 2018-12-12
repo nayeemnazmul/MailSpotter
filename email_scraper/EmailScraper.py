@@ -3,6 +3,7 @@ import re  # regex module
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+import time
 
 
 class EmailScraper:
@@ -20,6 +21,7 @@ class EmailScraper:
 
         try:
             # sending an http get request with specific url and get a response
+            starttime = time.time()
             response = session.get(url)
             if response is None:
                 return
@@ -54,7 +56,9 @@ class EmailScraper:
             if emails is None:
                 continue
             all_email.extend(emails)
-        return set(self.strip(all_email))
+
+        endtime = time.time()
+        return set(self.strip(all_email)), (endtime - starttime)
 
     def get_emails(self, url, session):
 
@@ -128,7 +132,8 @@ def requests_retry_session(
 ):
     session = session or requests.Session()
     session.max_redirects = 60
-    session.headers['User-Agent'] = 'Googlebot/2.1 (+http://www.google.com/bot.html)'
+    # session.headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 ' \
+    #                                 '(KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
     retry = Retry(
         total=retries,
         read=retries,

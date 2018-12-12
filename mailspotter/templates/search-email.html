@@ -25,10 +25,13 @@
 
     {% if message is defined %}
         {% if message is iterable and message is not string %}
-            {% if message|length > 0 %}
+            {% if message[0]|length > 0 %}
                 <div class="content-section">
                     <div class="alert alert-success" role="alert">
                         {{message|length}} emails have been found!
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ message[1] }} seconds taken!
                     </div>
                     <table class="table table-striped">
                       <thead class="thead-dark">
@@ -49,14 +52,14 @@
                 </div>
             {% else %}
                 <div class="alert alert-danger" role="alert">
-                    {{message|length}} email has been found! Try with different keywords.
+                    {{message[0]|length}} email has been found! Try with different keywords.
                 </div>
             {% endif %}
-        {% elif message is string %} {# message contain any string message other than email list #}
+        {% elif message[0] is string %} {# message contain any string message other than email list #}
             <div class="alert alert-danger" role="alert">
                 {{ message }}
             </div>
-        {% elif message is none %}
+        {% elif message[0] is none %}
             <div class="alert alert-danger" role="alert">
                 0 email has been found! Try with different keywords.
             </div>
