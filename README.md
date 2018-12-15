@@ -11,4 +11,4 @@ required packages:
   beautifulsoup4
   
 # Example
-![Search results in emails for a few keywords](https://imgur.com/FXqzJnT "Search results in emails for a few keywords")
+![Search results in emails for a few keywords](https://i.imgur.com/FXqzJnT.png "Search results in emails for a few keywords")
