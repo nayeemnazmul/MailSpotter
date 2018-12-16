@@ -58,10 +58,10 @@ class EmailScraper:
             emails = self.get_emails(url, session)
             if emails is None:
                 continue
-            all_email.extend(emails)
+            all_email.extend((emails, url))
 
         endtime = time.time()
-        return set(self.strip(all_email)), (endtime - starttime)
+        return all_email, (endtime - starttime)
 
     def get_emails(self, url, session):
 
@@ -120,7 +120,7 @@ class EmailScraper:
         # response.text returns html as string
         email_list.extend(email_regex.findall(response.text))
 
-        return email_list
+        return set(self.strip(email_list))
 
     def strip(self, all_email):
         first = [item.replace(" at ", "@") for item in all_email]

@@ -24,11 +24,18 @@
     </div>
 
     {% if message is defined %}
-        {% if message is iterable and message is not string %}
+        {% if message[0] is iterable and message is not string %}
             {% if message[0]|length > 0 %}
                 <div class="content-section">
                     <div class="alert alert-success" role="alert">
-                        {{message[0]|length}} emails have been found!
+                        {% set total_len = [0] %}
+                        {% for email_list in message[0] %}
+                            {% if email_list is iterable and email_list is not string%}
+                                {% if total_len.append(total_len.pop() + email_list|length) %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {{total_len[0]}} emails have been found!
                     </div>
                     <div class="alert alert-success" role="alert">
                         {{ "%.2f"|format(message[1]) }} seconds taken!
@@ -37,15 +44,25 @@
                       <thead class="thead-dark">
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Emails</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">URL</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for email in message[0] %}
-                            <tr>
-                              <th scope="row">{{ loop.index }}</th>
-                              <td>{{ email }}</td>
-                            </tr>
+                        {%  set idx = [1] %}
+                        {% for email_list in message[0] %}
+                            {% set outer_loop = loop %}
+                            {% if email_list is iterable and email_list is not string %}
+                                {% for email in email_list %}
+                                    <tr>
+                                        <th scope="row">{{ idx[0] }}</th>
+                                        <td>{{ email }}</td>
+                                        <td><a href="{{ message[0][outer_loop.index] }}">{{ message[0][outer_loop.index] }}</a></td>
+                                    </tr>
+                                    {% if idx.append(idx.pop() + 1) %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                         {% endfor %}
                       </tbody>
                     </table>
