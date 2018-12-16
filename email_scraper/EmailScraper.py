@@ -46,6 +46,9 @@ class EmailScraper:
         except requests.exceptions.MissingSchema:
             print("Missing Schema URL. " + url)
             return
+        except requests.exceptions.RetryError:
+            print("Retry Error " + url)
+            return
 
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -87,6 +90,9 @@ class EmailScraper:
         except requests.exceptions.MissingSchema:
             print("Missing Schema URL. " + url)
             response = session.get("http://" + url)
+        except requests.exceptions.RetryError:
+            print("Retry Error " + url)
+            return
 
         if response is None:
             return
