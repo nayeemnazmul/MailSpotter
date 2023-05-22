@@ -1,3 +1,6 @@
+# Archived (not maintained anymore)
+
+
 # MailSpotter
 required packages:
 
